@@ -12,7 +12,7 @@ class ArticleList extends Component {
           <h2>罗晓俊の博客</h2>
         </div>
 	<p>Building...</p>
-	<Link to="/article/1">技术博客重构之路</Link>
+	<Link to="/article/detail/1">技术博客重构之路</Link>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>

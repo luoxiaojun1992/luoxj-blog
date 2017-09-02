@@ -10,7 +10,7 @@ class ArticleDetail extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>罗晓俊の博客</h2>
         </div>
-	<p>Article Detail Page is Building...</p>
+	<p>Article Detail Page {this.props.match.params.id} is Building...</p>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
