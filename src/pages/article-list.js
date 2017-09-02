@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../App.css';
 
-class App extends Component {
+class ArticleList extends Component {
   render() {
     return (
       <div className="App">
@@ -11,7 +10,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>罗晓俊の博客</h2>
         </div>
-        <Link to="/article/list">列表页></Link>
+	<p>Building...</p>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
@@ -20,4 +19,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default ArticleList;
