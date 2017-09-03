@@ -19,6 +19,16 @@ class ArticleList extends Component {
       };
 
       this.loadFunc = this.loadFunc.bind(this);
+
+      this.fetchArticles(); 
+  }
+
+  fetchArticles() {
+      fetch('https://api.daishangqian.com/v3/index/index-new', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', }, body: JSON.stringify({ firstParam: 'yourValue', secondParam: 'yourOtherValue'}) }).then(function(res){
+    if (res.ok) {
+　　    res.text().then(function(data){console.log(data);});
+    }
+});
   }
 
   loadFunc(page) {
