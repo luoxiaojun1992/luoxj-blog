@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
+import BackTop from 'antd/lib/back-top';
 import logo from '../logo.svg';
 import '../App.css';
 
@@ -72,6 +73,7 @@ class ArticleList extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+	<BackTop />
       </div>
     );
   }

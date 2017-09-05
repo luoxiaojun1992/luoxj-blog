@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Sider, Content, Footer } from 'antd';
+import Button from 'antd/lib/button';
+import BackTop from 'antd/lib/back-top';
 import logo from './logo.svg';
 import './App.css';
 
@@ -25,19 +26,11 @@ class App extends Component {
 	    <li><Link to="/article/detail/1">技术博客重构之路</Link></li>
 	</ul>
         <Link to="/article/list">更多></Link>
+	<Button type="primary">Button</Button>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-
-	<Layout>
-	    <Header>header</Header>
-	    <Layout>
-	        <Sider>left sidebar</Sider>
-	            <Content>main content</Content>
-	        <Sider>right sidebar</Sider>
-	    </Layout>
-	    <Footer>footer</Footer>
-	</Layout>
+	<BackTop />
       </div>
     );
   }
