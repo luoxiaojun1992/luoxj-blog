@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../logo.svg';
+import BackTop from 'antd/lib/back-top';
+import Layout, {Header, Content, Footer } from 'antd/lib/layout';
+import Breadcrumb from 'antd/lib/breadcrumb';
 import '../App.css';
 
 class ArticleDetail extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2><Link to="/">罗晓俊の博客</Link></h2>
+        <div className="App">
+            <Layout>
+                <Header style={{position: 'fixed', width: '100%'}}>
+                    <h2><Link to="/">罗晓俊の博客</Link></h2>
+                </Header>
+                <Content style={{padding: '0 50px', marginTop: 64}}>
+                    <Breadcrumb style={{margin: '12px 0'}}>
+                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div style={{background: '#fff', padding: 24, minHeight: 380}}>
+                        <p>Building...</p>
+                    </div>
+                </Content>
+                <Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©2017 Created by Roy</Footer>
+            </Layout>
+            <BackTop />
         </div>
-	<p>Article Detail Page {this.props.match.params.id} is Building...</p>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
     );
   }
 }
