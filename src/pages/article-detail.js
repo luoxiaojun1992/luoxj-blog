@@ -15,7 +15,8 @@ class ArticleDetail extends Component {
                 </Header>
                 <Content style={{padding: '0 50px', marginTop: 64}}>
                     <Breadcrumb style={{margin: '12px 0'}}>
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item>首页</Breadcrumb.Item>
+                        <Breadcrumb.Item>文章内容</Breadcrumb.Item>
                     </Breadcrumb>
                     <div style={{background: '#fff', padding: 24, minHeight: 380}}>
                         <p>Building...</p>
