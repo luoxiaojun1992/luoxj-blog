@@ -79,7 +79,7 @@ class ArticleList extends Component {
                                 >
                                     {
                                         this.state.articles.map(function (article) {
-                                            return (<li key={article.id}><Link to={article.link}>{article.title}</Link></li>);
+                                            return (<li key={article.id}><h3><Link to={article.link}>{article.title}</Link></h3></li>);
                                         })
                                     }
                                 </InfiniteScroll>
