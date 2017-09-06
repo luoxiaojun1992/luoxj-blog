@@ -48,7 +48,7 @@ class App extends Component {
 							<ul>
 								{
 									this.state.articles.map(function (article) {
-										return (<li><Link to={article.link}>{article.title}</Link></li>);
+										return (<li key={article.id}><Link to={article.link}>{article.title}</Link></li>);
 									})
 								}
 							</ul>

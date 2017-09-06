@@ -45,7 +45,7 @@ class ArticleList extends Component {
     }
 
     loadFunc(page) {
-        if (page < 2) {
+        if (page < 1) {
             this.setState({
                 hasMoreItems: false
             });
@@ -79,7 +79,7 @@ class ArticleList extends Component {
                                 >
                                     {
                                         this.state.articles.map(function (article) {
-                                            return (<li><Link to={article.link}>{article.title}</Link></li>);
+                                            return (<li key={article.id}><Link to={article.link}>{article.title}</Link></li>);
                                         })
                                     }
                                 </InfiniteScroll>
