@@ -26,6 +26,7 @@ class App extends Component {
 		}).then(function (res) {
 			if (res.ok) {
 				res.json().then(function (jsonData) {
+					console.log(jsonData);
 					this.setState({
 						articles: jsonData.data
 					})
@@ -47,16 +48,11 @@ class App extends Component {
 						</Breadcrumb>
 						<div style={{background: '#fff', padding: 24, minHeight: 380}}>
 							<ul>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
-								<li><Link to="/article/detail/1">技术博客重构之路</Link></li>
+								{
+									this.state.articles.map(function (article) {
+										return (<li><Link to="/article/detail/1">{article.title}</Link></li>);
+									})
+								}
 							</ul>
 							<Link to="/article/list">更多></Link>
 						</div>
