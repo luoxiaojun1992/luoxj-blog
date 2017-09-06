@@ -6,6 +6,34 @@ import Breadcrumb from 'antd/lib/breadcrumb';
 import './App.css';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		var articles = [];
+
+		this.state = {
+			articles: articles
+		};
+
+		this.fetchArticles();
+	}
+
+	fetchArticles() {
+		fetch('http://api.fourleaver.com', {
+			method: 'POST',
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
+			body: JSON.stringify({firstParam: 'yourValue', secondParam: 'yourOtherValue'})
+		}).then(function (res) {
+			if (res.ok) {
+				res.json().then(function (jsonData) {
+					this.setState({
+						articles: jsonData.data
+					})
+				});
+			}
+		});
+	}
+
 	render() {
 		return (
 			<div className="App">
