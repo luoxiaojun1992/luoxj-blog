@@ -19,11 +19,11 @@ class ArticleList extends Component {
 
         this.loadFunc = this.loadFunc.bind(this);
 
-        this.fetchArticles(this);
+        this.fetchArticles(this, 0);
     }
 
-    fetchArticles(thisObj) {
-        fetch('http://api.fourleaver.com', {
+    fetchArticles(thisObj, offset) {
+        fetch('http://api.fourleaver.com?offset=' + offset, {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
@@ -49,7 +49,7 @@ class ArticleList extends Component {
             this.setState({
                 hasMoreItems: false
             });
-            this.fetchArticles(this);
+            this.fetchArticles(this, page);
         } else {
             this.setState({
                 hasMoreItems: false
