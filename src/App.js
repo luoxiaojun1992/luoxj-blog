@@ -15,19 +15,17 @@ class App extends Component {
 			articles: articles
 		};
 
-		this.fetchArticles();
+		this.fetchArticles(this);
 	}
 
-	fetchArticles() {
+	fetchArticles(thisObj) {
 		fetch('http://api.fourleaver.com', {
-			method: 'POST',
-			headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
-			body: JSON.stringify({firstParam: 'yourValue', secondParam: 'yourOtherValue'})
+			method: 'GET',
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 		}).then(function (res) {
 			if (res.ok) {
 				res.json().then(function (jsonData) {
-					console.log(jsonData);
-					this.setState({
+					thisObj.setState({
 						articles: jsonData.data
 					})
 				});
@@ -50,7 +48,7 @@ class App extends Component {
 							<ul>
 								{
 									this.state.articles.map(function (article) {
-										return (<li><Link to="/article/detail/1">{article.title}</Link></li>);
+										return (<li><Link to={article.link}>{article.title}</Link></li>);
 									})
 								}
 							</ul>

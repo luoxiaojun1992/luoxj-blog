@@ -10,53 +10,51 @@ class ArticleList extends Component {
     constructor(props) {
         super(props);
 
-        var items = [];
-        for (var i = 0; i < 20; i++) {
-            items.push(<li><Link to="/article/detail/1">技术博客重构之路</Link></li>);
-        }
+        var articles = [];
 
         this.state = {
-            items: items,
+            articles: articles,
             hasMoreItems: true
         };
 
         this.loadFunc = this.loadFunc.bind(this);
 
-        this.fetchArticles();
+        this.fetchArticles(this);
     }
 
-    fetchArticles() {
-        fetch('https://api.daishangqian.com/v3/index/index-new', {
-            method: 'POST',
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
-            body: JSON.stringify({firstParam: 'yourValue', secondParam: 'yourOtherValue'})
+    fetchArticles(thisObj) {
+        fetch('http://api.fourleaver.com', {
+            method: 'GET',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
             if (res.ok) {
-                res.text().then(function (data) {
-                    console.log(data);
+                res.json().then(function (jsonData) {
+                    var articles = thisObj.state.articles;
+                    jsonData.data.map(function (article) {
+                        articles.push(article);
+                        return articles;
+                    });
+
+                    thisObj.setState({
+                        articles: articles,
+                        hasMoreItems: true
+                    })
                 });
             }
         });
     }
 
     loadFunc(page) {
-        var items = this.state.items;
-        var hasMoreItems = this.state.hasMoreItems;
-        if (page < 30) {
+        if (page < 2) {
             this.setState({
                 hasMoreItems: false
             });
-            for (var i = 0; i < 20; i++) {
-                items.push(<li><Link to="/article/detail/1">技术博客重构之路</Link></li>);
-            }
+            this.fetchArticles(this);
         } else {
-            hasMoreItems = false;
+            this.setState({
+                hasMoreItems: false
+            });
         }
-
-        this.setState({
-            items: items,
-            hasMoreItems: hasMoreItems
-        });
     }
 
     render() {
@@ -79,7 +77,11 @@ class ArticleList extends Component {
                                     hasMore={this.state.hasMoreItems}
                                     loader={<div className="loader">Loading ...</div>}
                                 >
-                                    {this.state.items}
+                                    {
+                                        this.state.articles.map(function (article) {
+                                            return (<li><Link to={article.link}>{article.title}</Link></li>);
+                                        })
+                                    }
                                 </InfiniteScroll>
                             </ul>
                         </div>
