@@ -86,7 +86,7 @@ class ArticleList extends Component {
                             </ul>
                         </div>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©2017 Created by Roy</Footer>
+                    <Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©2017 Powered by Roy</Footer>
                 </Layout>
                 <BackTop />
             </div>

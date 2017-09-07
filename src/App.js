@@ -55,7 +55,7 @@ class App extends Component {
 							<Link to="/article/list">更多></Link>
 						</div>
 					</Content>
-					<Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©2017 Created by Roy</Footer>
+					<Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©2017 Powered by Roy</Footer>
 				</Layout>
 				<BackTop />
 			</div>
