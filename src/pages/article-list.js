@@ -22,8 +22,10 @@ class ArticleList extends Component {
         this.fetchArticles(this, 0);
     }
 
-    fetchArticles(thisObj, offset) {
-        fetch('http://api.fourleaver.com/article/action/list?offset=' + offset + '&limit=10', {
+    fetchArticles(thisObj, page) {
+        const limit = 10;
+        const offset = page * limit;
+        fetch('http://api.fourleaver.com/article/action/list?offset=' + offset + '&limit=' + limit, {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
@@ -35,7 +37,6 @@ class ArticleList extends Component {
                             articles.push(article);
                             return articles;
                         });
-
                         thisObj.setState({
                             articles: articles,
                             hasMoreItems: true
