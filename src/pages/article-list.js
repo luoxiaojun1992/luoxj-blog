@@ -14,7 +14,8 @@ class ArticleList extends Component {
 
         this.state = {
             articles: articles,
-            hasMoreItems: true
+            hasMoreItems: true,
+            page: -1
         };
 
         this.loadFunc = this.loadFunc.bind(this);
@@ -32,6 +33,10 @@ class ArticleList extends Component {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.data.length > 0) {
+                        if (thisObj.state.page + 1 !== page) {
+                            thisObj.fetchArticles(thisObj, page);
+                            return;
+                        }
                         var articles = thisObj.state.articles;
                         jsonData.data.map(function (article) {
                             articles.push(article);
@@ -39,7 +44,8 @@ class ArticleList extends Component {
                         });
                         thisObj.setState({
                             articles: articles,
-                            hasMoreItems: true
+                            hasMoreItems: true,
+                            page: page
                         })
                     } else {
                         thisObj.setState({
