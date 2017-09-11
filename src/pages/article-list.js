@@ -23,38 +23,38 @@ class ArticleList extends Component {
     }
 
     fetchArticles(thisObj, offset) {
-        fetch('http://api.fourleaver.com?offset=' + offset, {
+        fetch('http://api.fourleaver.com/article/action/list?offset=' + offset + '&limit=10', {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
             if (res.ok) {
                 res.json().then(function (jsonData) {
-                    var articles = thisObj.state.articles;
-                    jsonData.data.map(function (article) {
-                        articles.push(article);
-                        return articles;
-                    });
+                    if (jsonData.data.length > 0) {
+                        var articles = thisObj.state.articles;
+                        jsonData.data.map(function (article) {
+                            articles.push(article);
+                            return articles;
+                        });
 
-                    thisObj.setState({
-                        articles: articles,
-                        hasMoreItems: true
-                    })
+                        thisObj.setState({
+                            articles: articles,
+                            hasMoreItems: true
+                        })
+                    } else {
+                        thisObj.setState({
+                            hasMoreItems: false
+                        });
+                    }
                 });
             }
         });
     }
 
     loadFunc(page) {
-        if (page < 1) {
-            this.setState({
-                hasMoreItems: false
-            });
-            this.fetchArticles(this, page);
-        } else {
-            this.setState({
-                hasMoreItems: false
-            });
-        }
+        this.setState({
+            hasMoreItems: false
+        });
+        this.fetchArticles(this, page);
     }
 
     render() {
