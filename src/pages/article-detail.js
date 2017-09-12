@@ -7,6 +7,12 @@ import '../App.css';
 import ReactMarkdown from 'react-markdown';
 
 class ArticleDetail extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {};
+    }
+
     render() {
         const input = '# This is a header\n\nAnd this is a paragraph';
 
