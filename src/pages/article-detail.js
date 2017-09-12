@@ -54,6 +54,7 @@ class ArticleDetail extends Component {
                             <Breadcrumb.Item>文章内容</Breadcrumb.Item>
                         </Breadcrumb>
                         <div style={{background: '#fff', padding: 24, minHeight: 380}}>
+                            <h2>{this.state.article.title}</h2>
                             <ReactMarkdown source={this.state.article.content}/>
                         </div>
                     </Content>
