@@ -5,6 +5,7 @@ import BackTop from 'antd/lib/back-top';
 import Layout, {Header, Content, Footer } from 'antd/lib/layout';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import '../App.css';
+import config from 'react-global-configuration';
 
 class ArticleList extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class ArticleList extends Component {
     fetchArticles(thisObj, page) {
         const limit = 10;
         const offset = page * limit;
-        fetch('http://api.fourleaver.com/article/action/list?offset=' + offset + '&limit=' + limit, {
+        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit, {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {

@@ -4,6 +4,7 @@ import BackTop from 'antd/lib/back-top';
 import Layout, {Header, Content, Footer } from 'antd/lib/layout';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import './App.css';
+import config from 'react-global-configuration';
 
 class App extends Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ class App extends Component {
 	}
 
 	fetchArticles(thisObj) {
-		fetch('http://api.fourleaver.com', {
+		fetch(config.get('api_gateway'), {
 			method: 'GET',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 		}).then(function (res) {

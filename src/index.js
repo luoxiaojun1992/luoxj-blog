@@ -6,6 +6,10 @@ import App from './App';
 import ArticleList from './pages/article-list';
 import ArticleDetail from './pages/article-detail';
 import registerServiceWorker from './registerServiceWorker';
+import config from 'react-global-configuration';
+import configuration from './config';
+
+config.set(configuration);
 
 ReactDOM.render((
   <Router>
