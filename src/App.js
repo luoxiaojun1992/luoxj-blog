@@ -39,7 +39,7 @@ class App extends Component {
 			<div className="App">
 				<Layout>
 					<Header style={{position: 'fixed', width: '100%'}}>
-						<h2><Link to="/">罗晓俊の博客</Link></h2>
+						<h2><Link className="Link" to="/">罗晓俊の博客</Link></h2>
 					</Header>
 					<Content style={{padding: '0 50px', marginTop: 64}}>
 						<Breadcrumb style={{margin: '12px 0'}}>
