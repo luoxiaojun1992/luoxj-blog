@@ -8,16 +8,23 @@ import ArticleDetail from './pages/article-detail';
 import registerServiceWorker from './registerServiceWorker';
 import config from 'react-global-configuration';
 import configuration from './config';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import todoApp from './reducers'
 
 config.set(configuration);
 
+let store = createStore(todoApp);
+
 ReactDOM.render((
-  <Router>
-    <div>
-        <Route exact path="/" component={App} />
-        <Route path="/article/list" component={ArticleList} />
-	    <Route path="/article/detail/:id" component={ArticleDetail} />
-    </div>
-  </Router>
+    <Provider store={store}>
+        <Router>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route path="/article/list" component={ArticleList} />
+                <Route path="/article/detail/:id" component={ArticleDetail} />
+            </div>
+        </Router>
+    </Provider>
 ), document.getElementById('root'));
 registerServiceWorker();
