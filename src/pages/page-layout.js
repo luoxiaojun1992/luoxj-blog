@@ -34,8 +34,8 @@ class PageLayout extends Component {
 
 function select (state) { // 手动注入state，dispatch分发器被connect自动注入
     return { // 注入的内容自行选择
-        year: state.year
-    }
+        year: state.getCommonConfigs.year
+    };
 }
 
 export default connect(select)(PageLayout);
