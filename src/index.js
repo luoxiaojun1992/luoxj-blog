@@ -10,11 +10,11 @@ import config from 'react-global-configuration';
 import configuration from './config';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import todoApp from './reducers'
+import luoxjBlog from './reducers'
 
 config.set(configuration);
 
-let store = createStore(todoApp);
+let store = createStore(luoxjBlog);
 
 ReactDOM.render((
     <Provider store={store}>
