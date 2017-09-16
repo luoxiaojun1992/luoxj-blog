@@ -8,13 +8,14 @@ import ArticleDetail from './pages/article-detail';
 import registerServiceWorker from './registerServiceWorker';
 import config from 'react-global-configuration';
 import configuration from './config';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk';
 import luoxjBlog from './reducers'
 
 config.set(configuration);
 
-let store = createStore(luoxjBlog);
+let store = createStore(luoxjBlog, applyMiddleware(thunk));
 
 ReactDOM.render((
     <Provider store={store}>

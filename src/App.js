@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import './App.css';
-import config from 'react-global-configuration';
 import PageLayout from './pages/page-layout';
+import { connect } from 'react-redux';
+import { getIndexArticles } from './actions';
 
 class App extends Component {
 	constructor(props) {
@@ -15,22 +16,9 @@ class App extends Component {
 			articles: articles
 		};
 
-		this.fetchArticles(this);
-	}
+		const { dispatch } = props;
 
-	fetchArticles(thisObj) {
-		fetch(config.get('api_gateway'), {
-			method: 'GET',
-			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-		}).then(function (res) {
-			if (res.ok) {
-				res.json().then(function (jsonData) {
-					thisObj.setState({
-						articles: jsonData.data
-					})
-				});
-			}
-		});
+		dispatch(getIndexArticles());
 	}
 
 	render() {
@@ -48,7 +36,7 @@ class App extends Component {
 			}}>
 				<ul>
 					{
-						this.state.articles.map(function (article) {
+						this.props.articles.map(function (article) {
 							return (<li key={article.id}><h3><Link to={article.link}>{article.title}</Link></h3></li>);
 						})
 					}
@@ -59,4 +47,12 @@ class App extends Component {
 	}
 }
 
-export default App;
+function mapStateToProps (state) { // 手动注入state，dispatch分发器被connect自动注入
+	let articles = state.getCommonConfigs.articles;
+
+	return { // 注入的内容自行选择
+		articles: articles === undefined ? [] : articles
+	};
+}
+
+export default connect(mapStateToProps)(App);

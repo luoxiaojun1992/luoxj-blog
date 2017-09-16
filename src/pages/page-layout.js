@@ -7,11 +7,15 @@ import { connect } from 'react-redux';
 import { getYear } from '../actions';
 
 class PageLayout extends Component {
-    render() {
-        const { dispatch } = this.props;
+    constructor(props) {
+        super(props);
+
+        const { dispatch } = props;
 
         dispatch(getYear());
+    }
 
+    render() {
         return (
             <div className="App">
                 <Layout>
