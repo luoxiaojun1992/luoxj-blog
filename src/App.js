@@ -10,12 +10,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		var articles = [];
-
-		this.state = {
-			articles: articles
-		};
-
 		const { dispatch } = props;
 
 		dispatch(getIndexArticles());

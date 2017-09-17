@@ -3,41 +3,17 @@ import { Link } from 'react-router-dom';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import '../App.css';
 import ReactMarkdown from 'react-markdown';
-import config from 'react-global-configuration';
 import PageLayout from './page-layout';
+import { connect } from 'react-redux';
+import { getDetailArticle } from '../actions';
 
 class ArticleDetail extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            article: {
-                title: "",
-                content: "",
-                author: "",
-                category_name: "",
-                created_at: ""
-            }
-        };
+        const { dispatch } = props;
 
-        this.fetchArticle(this);
-    }
-
-    fetchArticle(thisObj) {
-        fetch(config.get('api_gateway') + '/article/action/detail?id=' + thisObj.props.match.params.id, {
-            method: 'GET',
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-        }).then(function (res) {
-            if (res.ok) {
-                res.json().then(function (jsonData) {
-                    if (jsonData.code === 0) {
-                        thisObj.setState({
-                            article: jsonData.data
-                        });
-                    }
-                });
-            }
-        });
+        dispatch(getDetailArticle(props.match.params.id));
     }
 
     render() {
@@ -54,11 +30,25 @@ class ArticleDetail extends Component {
                     <h2><Link to="/">罗晓俊の博客</Link></h2>
                 );
             }}>
-                <h2>{this.state.article.title}</h2>
-                <ReactMarkdown source={this.state.article.content}/>
+                <h2>{this.props.article.title}</h2>
+                <ReactMarkdown source={this.props.article.content}/>
             </PageLayout>
         );
     }
 }
 
-export default ArticleDetail;
+function mapStateToProps (state) { // 手动注入state，dispatch分发器被connect自动注入
+    let article = state.getCommonConfigs.article;
+
+    return { // 注入的内容自行选择
+        article: article === undefined ? {
+            title: "",
+            content: "",
+            author: "",
+            category_name: "",
+            created_at: ""
+        } : article
+    };
+}
+
+export default connect(mapStateToProps)(ArticleDetail);
