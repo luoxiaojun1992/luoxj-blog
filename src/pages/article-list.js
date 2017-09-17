@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import '../App.css';
-import config from 'react-global-configuration';
 import PageLayout from './page-layout';
+import { connect } from 'react-redux';
+import { getListArticles } from '../actions';
 
 class ArticleList extends Component {
     constructor(props) {
@@ -20,48 +21,19 @@ class ArticleList extends Component {
 
         this.loadFunc = this.loadFunc.bind(this);
 
-        this.fetchArticles(this, 0);
-    }
+        const { dispatch } = props;
 
-    fetchArticles(thisObj, page) {
-        const limit = 10;
-        const offset = page * limit;
-        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit, {
-            method: 'GET',
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-        }).then(function (res) {
-            if (res.ok) {
-                res.json().then(function (jsonData) {
-                    if (jsonData.data.length > 0) {
-                        if (thisObj.state.page + 1 !== page) {
-                            thisObj.fetchArticles(thisObj, page);
-                            return;
-                        }
-                        var articles = thisObj.state.articles;
-                        jsonData.data.map(function (article) {
-                            articles.push(article);
-                            return articles;
-                        });
-                        thisObj.setState({
-                            articles: articles,
-                            hasMoreItems: true,
-                            page: page
-                        })
-                    } else {
-                        thisObj.setState({
-                            hasMoreItems: false
-                        });
-                    }
-                });
-            }
-        });
+        dispatch(getListArticles(this, 0));
     }
 
     loadFunc(page) {
         this.setState({
             hasMoreItems: false
         });
-        this.fetchArticles(this, page);
+
+        const { dispatch } = this.props;
+
+        dispatch(getListArticles(this, page));
     }
 
     render() {
@@ -98,4 +70,8 @@ class ArticleList extends Component {
     }
 }
 
-export default ArticleList;
+function mapStateToProps (state) { // 手动注入state，dispatch分发器被connect自动注入
+    return {};
+}
+
+export default connect(mapStateToProps)(ArticleList);
