@@ -20,7 +20,7 @@ export function getYear() {
 
 export function getIndexArticles() {
     return function(dispatch) {
-        fetch(config.get('api_gateway'), {
+        fetch(config.get('api_gateway') + '?access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
