@@ -35,7 +35,7 @@ export function getIndexArticles() {
 
 export function getDetailArticle(id) {
     return function(dispatch) {
-        fetch(config.get('api_gateway') + '/article/action/detail?id=' + id + '&access-token=test', {
+        fetch(config.get('api_gateway') + '/article/action/detail?id=' + id + '&access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
@@ -54,7 +54,7 @@ export function getListArticles(thisObj, page) {
     return function (dispatch) {
         const limit = 10;
         const offset = page * limit;
-        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit  + '&access-token=test', {
+        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit  + '&access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
