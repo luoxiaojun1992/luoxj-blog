@@ -10,6 +10,8 @@ export const GET_INDEX_ARTICLES = 'GET_INDEX_ARTICLES';
 
 export const GET_DETAIL_ARTICLE = 'GET_DETAIL_ARTICLE';
 
+export const QUERY_WEATHER = 'QUERY_WEATHER';
+
 /*
  * action 创建函数
  */
@@ -84,4 +86,21 @@ export function getListArticles(thisObj, page) {
             }
         });
     };
+}
+
+export function queryWeather(city) {
+    return function(dispatch) {
+        fetch(config.get('api_gateway') + '/weather/action/query?city=' + city + '&access-token=' + config.get('access-token'), {
+            method: 'GET',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (jsonData) {
+                    if (jsonData.code === 0) {
+                        dispatch({type: QUERY_WEATHER, weather: jsonData.data});
+                    }
+                });
+            }
+        });
+    }
 }
