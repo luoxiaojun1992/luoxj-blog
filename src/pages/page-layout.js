@@ -5,6 +5,7 @@ import Layout, { Header, Content, Footer } from 'antd/lib/layout';
 import '../App.css';
 import { connect } from 'react-redux';
 import { getYear } from '../actions';
+import {geolocated} from 'react-geolocated';
 
 class PageLayout extends Component {
     constructor(props) {
@@ -13,6 +14,12 @@ class PageLayout extends Component {
         const { dispatch } = props;
 
         dispatch(getYear());
+
+        if (props.isGeolocationAvailable && props.isGeolocationEnabled) {
+            console.log(props.isGeolocationAvailable);
+            console.log(props.isGeolocationEnabled);
+            console.log(props);
+        }
     }
 
     render() {
@@ -42,4 +49,9 @@ function mapStateToProps (state) { // 手动注入state，dispatch分发器被co
     };
 }
 
-export default connect(mapStateToProps)(PageLayout);
+export default connect(mapStateToProps)(geolocated({
+    positionOptions: {
+        enableHighAccuracy: false
+    },
+    userDecisionTimeout: 5000
+})(PageLayout));
