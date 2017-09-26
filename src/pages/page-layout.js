@@ -4,8 +4,7 @@ import BackTop from 'antd/lib/back-top';
 import Layout, { Header, Content, Footer } from 'antd/lib/layout';
 import '../App.css';
 import { connect } from 'react-redux';
-import { getYear } from '../actions';
-import {geolocated} from 'react-geolocated';
+import { getYear, queryWeather } from '../actions';
 
 class PageLayout extends Component {
     constructor(props) {
@@ -15,11 +14,7 @@ class PageLayout extends Component {
 
         dispatch(getYear());
 
-        if (props.isGeolocationAvailable && props.isGeolocationEnabled) {
-            console.log(props.isGeolocationAvailable);
-            console.log(props.isGeolocationEnabled);
-            console.log(props);
-        }
+        dispatch(queryWeather('上海'));
     }
 
     render() {
@@ -27,7 +22,7 @@ class PageLayout extends Component {
             <div className="App">
                 <Layout>
                     <Header style={{position: 'fixed', width: '100%'}}>
-                        <h2><Link to="/">罗晓俊の博客</Link></h2>
+                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right"}}>{this.props.weather}</span></h2>
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
@@ -45,13 +40,9 @@ class PageLayout extends Component {
 
 function mapStateToProps (state) { // 手动注入state，dispatch分发器被connect自动注入
     return { // 注入的内容自行选择
-        year: state.getCommonConfigs.year
+        year: state.getCommonConfigs.year,
+        weather: state.getCommonConfigs.weather
     };
 }
 
-export default connect(mapStateToProps)(geolocated({
-    positionOptions: {
-        enableHighAccuracy: false
-    },
-    userDecisionTimeout: 5000
-})(PageLayout));
+export default connect(mapStateToProps)(PageLayout);

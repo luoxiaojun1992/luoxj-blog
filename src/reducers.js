@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_YEAR, GET_INDEX_ARTICLES, GET_DETAIL_ARTICLE } from './actions';
+import { GET_YEAR, GET_INDEX_ARTICLES, GET_DETAIL_ARTICLE, QUERY_WEATHER } from './actions';
 
 function getCommonConfigs(state = {}, action) {
     switch (action.type) {
@@ -14,6 +14,10 @@ function getCommonConfigs(state = {}, action) {
         case GET_DETAIL_ARTICLE:
             return Object.assign({}, state, {
                 article: action.article
+            });
+        case QUERY_WEATHER:
+            return Object.assign({}, state, {
+                weather: action.weather
             });
         default:
             return state;
