@@ -12,6 +12,8 @@ export const GET_DETAIL_ARTICLE = 'GET_DETAIL_ARTICLE';
 
 export const QUERY_WEATHER = 'QUERY_WEATHER';
 
+export const LOCATE_IP = 'LOCATE_IP';
+
 /*
  * action 创建函数
  */
@@ -98,6 +100,23 @@ export function queryWeather(city) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
                         dispatch({type: QUERY_WEATHER, weather: jsonData.data.week + ' - ' + jsonData.data.weather});
+                    }
+                });
+            }
+        });
+    }
+}
+
+export function locateIp() {
+    return function(dispatch) {
+        fetch(config.get('api_gateway') + '/ip/action/locate?access-token=' + config.get('access-token'), {
+            method: 'GET',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (jsonData) {
+                    if (jsonData.code === 0) {
+                        dispatch({type: LOCATE_IP, city: jsonData.data[2]});
                     }
                 });
             }
