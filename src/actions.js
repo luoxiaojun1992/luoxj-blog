@@ -116,7 +116,9 @@ export function locateIp() {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
-                        dispatch({type: LOCATE_IP, city: jsonData.data[2]});
+                        var city = jsonData.data[2];
+                        dispatch(queryWeather(city));
+                        // dispatch({type: LOCATE_IP, city: city});
                     }
                 });
             }

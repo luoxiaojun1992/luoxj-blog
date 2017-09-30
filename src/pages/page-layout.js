@@ -4,7 +4,7 @@ import BackTop from 'antd/lib/back-top';
 import Layout, { Header, Content, Footer } from 'antd/lib/layout';
 import '../App.css';
 import { connect } from 'react-redux';
-import { getYear, queryWeather } from '../actions';
+import { getYear, locateIp } from '../actions';
 
 class PageLayout extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class PageLayout extends Component {
 
         dispatch(getYear());
 
-        dispatch(queryWeather('上海'));
+        dispatch(locateIp());
     }
 
     render() {
