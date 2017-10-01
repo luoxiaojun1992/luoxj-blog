@@ -1,5 +1,5 @@
 const config = {
-    "api_gateway": "http://api.fourleaver.com",
+    "api_gateway": "https://api.fourleaver.com",
     "access-token": "test"
 };
 
