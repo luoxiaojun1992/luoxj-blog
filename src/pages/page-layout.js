@@ -4,7 +4,8 @@ import BackTop from 'antd/lib/back-top';
 import Layout, { Header, Content, Footer } from 'antd/lib/layout';
 import '../App.css';
 import { connect } from 'react-redux';
-import { getYear, locateIp } from '../actions';
+import { getYear, locateIp, queryHoliday } from '../actions';
+import '../iconfont/iconfont.css';
 
 class PageLayout extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ class PageLayout extends Component {
         dispatch(getYear());
 
         dispatch(locateIp());
+
+        dispatch(queryHoliday());
     }
 
     render() {
@@ -22,7 +25,7 @@ class PageLayout extends Component {
             <div className="App">
                 <Layout>
                     <Header style={{position: 'fixed', width: '100%'}}>
-                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right"}}>{this.props.weather}</span></h2>
+                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right"}}><i className={this.props.holiday} />{this.props.weather}</span></h2>
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
@@ -39,9 +42,25 @@ class PageLayout extends Component {
 }
 
 function mapStateToProps (state) { // 手动注入state，dispatch分发器被connect自动注入
+    const holiday = state.getCommonConfigs.holiday;
+    let iconCode = '';
+    switch (holiday) {
+        case 0:
+            iconCode = 'iconfont icon-gong';
+            break;
+        case 1:
+            iconCode = 'iconfont icon-xiuxi';
+            break;
+        case 2:
+            iconCode = 'iconfont icon-jia';
+            break;
+        default:
+    }
+
     return { // 注入的内容自行选择
         year: state.getCommonConfigs.year,
-        weather: state.getCommonConfigs.weather
+        weather: state.getCommonConfigs.weather,
+        holiday: iconCode
     };
 }
 

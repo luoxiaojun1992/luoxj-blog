@@ -12,7 +12,7 @@ export const GET_DETAIL_ARTICLE = 'GET_DETAIL_ARTICLE';
 
 export const QUERY_WEATHER = 'QUERY_WEATHER';
 
-export const LOCATE_IP = 'LOCATE_IP';
+export const QUERY_HOLIDAY = 'QUERY_HOLIDAY';
 
 /*
  * action 创建函数
@@ -118,7 +118,23 @@ export function locateIp() {
                     if (jsonData.code === 0) {
                         var city = jsonData.data[2];
                         dispatch(queryWeather(city));
-                        // dispatch({type: LOCATE_IP, city: city});
+                    }
+                });
+            }
+        });
+    }
+}
+
+export function queryHoliday() {
+    return function(dispatch) {
+        fetch(config.get('api_gateway') + '/holiday/action/query?&access-token=' + config.get('access-token'), {
+            method: 'GET',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (jsonData) {
+                    if (jsonData.code === 0) {
+                        dispatch({type: QUERY_HOLIDAY, holiday: jsonData.data});
                     }
                 });
             }
