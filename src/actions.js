@@ -99,7 +99,7 @@ export function queryWeather(city) {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
-                        dispatch({type: QUERY_WEATHER, weather: jsonData.data.week + ' - ' + jsonData.data.weather});
+                        dispatch({type: QUERY_WEATHER, weather: jsonData.data.week + ' - ' + jsonData.data.weather + ' - ' + jsonData.data.temp + '℃'});
                     }
                 });
             }
