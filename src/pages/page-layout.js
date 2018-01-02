@@ -25,7 +25,7 @@ class PageLayout extends Component {
             <div className="App">
                 <Layout>
                     <Header style={{position: 'fixed', width: '100%'}}>
-                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right"}}><i className={this.props.holiday} />{this.props.weather}</span></h2>
+                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right", "color": "#1890ff"}}><i className={this.props.holiday} />{this.props.weather}</span></h2>
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
