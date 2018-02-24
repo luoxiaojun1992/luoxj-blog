@@ -13,6 +13,13 @@ class ArticleDetail extends Component {
 
         const { dispatch } = props;
 
+        //清除缓存的旧数据
+        props.article.title = '';
+        props.article.content = '';
+        props.article.author = '';
+        props.article.category_name = '';
+        props.article.created_at = '';
+
         dispatch(getDetailArticle(props.match.params.id));
     }
 
