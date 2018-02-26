@@ -4,7 +4,7 @@ import BackTop from 'antd/lib/back-top';
 import Layout, { Header, Content, Footer } from 'antd/lib/layout';
 import '../App.css';
 import { connect } from 'react-redux';
-import { getYear, locateIp, queryHoliday } from '../actions';
+import { getYear, locateIp, queryHoliday, reqAggregate } from '../actions';
 import '../iconfont/iconfont.css';
 
 class PageLayout extends Component {
@@ -15,9 +15,11 @@ class PageLayout extends Component {
 
         dispatch(getYear());
 
-        dispatch(locateIp());
+        // dispatch(locateIp());
 
-        dispatch(queryHoliday());
+        // dispatch(queryHoliday());
+
+        dispatch(reqAggregate());
     }
 
     render() {

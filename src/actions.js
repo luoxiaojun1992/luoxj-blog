@@ -141,3 +141,41 @@ export function queryHoliday() {
         });
     }
 }
+
+export function reqAggregate() {
+    return function(dispatch) {
+        fetch(config.get('api_gateway') + '/aggregate/action/req?&access-token=' + config.get('access-token'), {
+            method: 'POST',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+            body: JSON.stringify([
+                {
+                    "service": "util",
+                    "method": "ipLocate",
+                    "params": []
+                },
+                {
+                    "service": "util",
+                    "method": "holidayQuery",
+                    "params": []
+                }
+            ])
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (jsonData) {
+                    if (jsonData.code === 0) {
+                        let ipLocate = eval('(' + jsonData.data.util.ipLocate + ')');
+                        if (ipLocate.code === 0) {
+                            var city = ipLocate.data[2];
+                            dispatch(queryWeather(city));
+                        }
+
+                        let holidayQuery = eval('(' + jsonData.data.util.holidayQuery + ')');
+                        if (holidayQuery.code === 0) {
+                            dispatch({type: QUERY_HOLIDAY, holiday: holidayQuery.data});
+                        }
+                    }
+                });
+            }
+        });
+    }
+}
