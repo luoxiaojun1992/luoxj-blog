@@ -27,7 +27,15 @@ class PageLayout extends Component {
             <div className="App">
                 <Layout>
                     <Header style={{position: 'fixed', width: '100%'}}>
-                        <h2><Link to="/">罗晓俊の博客</Link><span style={{"float": "right", "color": "#1890ff"}}><i className={this.props.holiday} />{this.props.weather}</span></h2>
+                        <h2>
+                            <Link to="/">罗晓俊の博客</Link>
+                            <span style={{"float": "right", "color": "#1890ff"}}>
+                                签到{this.props.checkInDataTotal}次
+                            </span>
+                            <span style={{"float": "right", "color": "#1890ff"}}>
+                                <i className={this.props.holiday} />{this.props.weather}&nbsp;&nbsp;&nbsp;
+                            </span>
+                        </h2>
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
@@ -62,7 +70,9 @@ function mapStateToProps (state) { // 手动注入state，dispatch分发器被co
     return { // 注入的内容自行选择
         year: state.getCommonConfigs.year,
         weather: state.getCommonConfigs.weather,
-        holiday: iconCode
+        holiday: iconCode,
+        checkInDataTotal: state.getCommonConfigs.checkInDataTotal,
+        checkInDataLastTime: state.getCommonConfigs.checkInDataLastTime
     };
 }
 

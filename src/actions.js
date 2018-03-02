@@ -14,6 +14,8 @@ export const QUERY_WEATHER = 'QUERY_WEATHER';
 
 export const QUERY_HOLIDAY = 'QUERY_HOLIDAY';
 
+export const CHECK_IN_DATA = 'CHECK_IN_DATA';
+
 /*
  * action 创建函数
  */
@@ -157,6 +159,11 @@ export function reqAggregate() {
                     "service": "util",
                     "method": "holidayQuery",
                     "params": []
+                },
+                {
+                    "service": "user",
+                    "method": "checkInData",
+                    "params": []
                 }
             ])
         }).then(function (res) {
@@ -173,6 +180,8 @@ export function reqAggregate() {
                         if (holidayQuery.code === 0) {
                             dispatch({type: QUERY_HOLIDAY, holiday: holidayQuery.data});
                         }
+                        let checkInData = jsonData.data.user.checkInData;
+                        dispatch({type: CHECK_IN_DATA, total: checkInData.total, last_time: checkInData.last_time});
                     }
                 });
             }
