@@ -94,6 +94,20 @@ export function getListArticles(thisObj, page) {
 
 export function queryWeather(city) {
     return function(dispatch) {
+        if ((new Date()).getTime() - localStorage.getItem('luoxj-blog:cache:query-weather:expire') <= 3600000) {
+            let jsonDataCache = localStorage.getItem('luoxj-blog:cache:query-weather');
+            if (jsonDataCache != null) {
+                let jsonData = eval('(' + jsonDataCache + ')');
+                if (jsonData.code === 0) {
+                    dispatch({
+                        type: QUERY_WEATHER,
+                        weather: jsonData.data.week + ' - ' + jsonData.data.weather + ' - ' + jsonData.data.temp + '℃'
+                    });
+                    return;
+                }
+            }
+        }
+
         fetch(config.get('api_gateway') + '/weather/action/query?city=' + city + '&access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
@@ -101,6 +115,9 @@ export function queryWeather(city) {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
+                        localStorage.setItem('luoxj-blog:cache:query-weather', JSON.stringify(jsonData));
+                        localStorage.setItem('luoxj-blog:cache:query-weather:expire', (new Date()).getTime());
+
                         dispatch({type: QUERY_WEATHER, weather: jsonData.data.week + ' - ' + jsonData.data.weather + ' - ' + jsonData.data.temp + '℃'});
                     }
                 });
@@ -146,6 +163,29 @@ export function queryHoliday() {
 
 export function reqAggregate() {
     return function(dispatch) {
+        if ((new Date()).getTime() - localStorage.getItem('luoxj-blog:cache:req-aggregate:expire') <= 3600000) {
+            let jsonDataCache = localStorage.getItem('luoxj-blog:cache:req-aggregate');
+            if (jsonDataCache != null) {
+                let jsonData = eval('(' + jsonDataCache + ')');
+                if (jsonData.code === 0) {
+                    let ipLocate = eval('(' + jsonData.data.util.ipLocate + ')');
+                    if (ipLocate.code === 0) {
+                        var city = ipLocate.data[2];
+                        dispatch(queryWeather(city));
+                    }
+
+                    let holidayQuery = eval('(' + jsonData.data.util.holidayQuery + ')');
+                    if (holidayQuery.code === 0) {
+                        dispatch({type: QUERY_HOLIDAY, holiday: holidayQuery.data});
+                    }
+                    let checkInData = jsonData.data.user.checkInData;
+                    dispatch({type: CHECK_IN_DATA, total: checkInData.total, last_time: checkInData.last_time});
+
+                    return;
+                }
+            }
+        }
+
         fetch(config.get('api_gateway') + '/aggregate/action/req?&access-token=' + config.get('access-token'), {
             method: 'POST',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -170,6 +210,9 @@ export function reqAggregate() {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
+                        localStorage.setItem('luoxj-blog:cache:req-aggregate', JSON.stringify(jsonData));
+                        localStorage.setItem('luoxj-blog:cache:req-aggregate:expire', (new Date()).getTime());
+
                         let ipLocate = eval('(' + jsonData.data.util.ipLocate + ')');
                         if (ipLocate.code === 0) {
                             var city = ipLocate.data[2];
