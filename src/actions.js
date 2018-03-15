@@ -26,12 +26,24 @@ export function getYear() {
 
 export function getIndexArticles() {
     return function(dispatch) {
+        if ((new Date()).getTime() - localStorage.getItem('luoxj-blog:cache:index-articles:expire') <= 3600000) {
+            let jsonDataCache = localStorage.getItem('luoxj-blog:cache:index-articles');
+            if (jsonDataCache != null) {
+                let jsonData = eval('(' + jsonDataCache + ')');
+                dispatch({type: GET_INDEX_ARTICLES, articles: jsonData.data});
+                return;
+            }
+        }
+
         fetch(config.get('api_gateway') + '?access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {
             if (res.ok) {
                 res.json().then(function (jsonData) {
+                    localStorage.setItem('luoxj-blog:cache:index-articles', JSON.stringify(jsonData));
+                    localStorage.setItem('luoxj-blog:cache:index-articles:expire', (new Date()).getTime());
+
                     dispatch({type: GET_INDEX_ARTICLES, articles: jsonData.data});
                 });
             }
@@ -41,6 +53,17 @@ export function getIndexArticles() {
 
 export function getDetailArticle(id) {
     return function(dispatch) {
+        if ((new Date()).getTime() - localStorage.getItem('luoxj-blog:cache:detail-article:' + id + ':expire') <= 3600000) {
+            let jsonDataCache = localStorage.getItem('luoxj-blog:cache:detail-article:' + id);
+            if (jsonDataCache != null) {
+                let jsonData = eval('(' + jsonDataCache + ')');
+                if (jsonData.code === 0) {
+                    dispatch({type: GET_DETAIL_ARTICLE, article: jsonData.data});
+                    return;
+                }
+            }
+        }
+
         fetch(config.get('api_gateway') + '/article/action/detail?id=' + id + '&access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
@@ -48,6 +71,9 @@ export function getDetailArticle(id) {
             if (res.ok) {
                 res.json().then(function (jsonData) {
                     if (jsonData.code === 0) {
+                        localStorage.setItem('luoxj-blog:cache:detail-article:' + id, JSON.stringify(jsonData));
+                        localStorage.setItem('luoxj-blog:cache:detail-article:' + id + ':expire', (new Date()).getTime());
+
                         dispatch({type: GET_DETAIL_ARTICLE, article: jsonData.data});
                     }
                 });
@@ -71,7 +97,7 @@ export function getListArticles(thisObj, page) {
                             dispatch(getListArticles(thisObj, page));
                             return;
                         }
-                        var articles = thisObj.state.articles;
+                        let articles = thisObj.state.articles;
                         jsonData.data.map(function (article) {
                             articles.push(article);
                             return articles;
