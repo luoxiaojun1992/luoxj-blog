@@ -22,6 +22,20 @@ class PageLayout extends Component {
         dispatch(reqAggregate());
     }
 
+    clearLocalStorage() {
+        let localStorageLen = localStorage.length;
+        let localStorageKeys = [];
+        for (let i = 0; i < localStorageLen; ++i) {
+            let localStorageKeyTmp = localStorage.key(i);
+            if (localStorageKeyTmp.indexOf('luoxj-blog:cache:') === 0) {
+                localStorageKeys.push(localStorageKeyTmp);
+            }
+        }
+        localStorageKeys.map(function (localStorageKey) {
+            localStorage.removeItem(localStorageKey);
+        });
+    }
+
     render() {
         return (
             <div className="App">
@@ -43,7 +57,9 @@ class PageLayout extends Component {
                             {this.props.children}
                         </div>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>罗晓俊の博客 ©{this.props.year} Powered by Roy</Footer>
+                    <Footer style={{textAlign: 'center'}}>
+                        罗晓俊の博客 ©{this.props.year} Powered by Roy <a onClick={this.clearLocalStorage}>清除缓存</a>
+                    </Footer>
                 </Layout>
                 <BackTop />
             </div>
