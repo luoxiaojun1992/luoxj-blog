@@ -20,9 +20,23 @@ class PageLayout extends Component {
         // dispatch(queryHoliday());
 
         dispatch(reqAggregate());
+
+        this.state = {
+            "canClearCache": true
+        };
+
+        this.clearLocalStorage = this.clearLocalStorage.bind(this);
     }
 
     clearLocalStorage() {
+        if (!this.state.canClearCache) {
+            return;
+        }
+
+        this.setState({
+            "canClearCache": false
+        });
+
         let localStorageLen = localStorage.length;
         let localStorageKeys = [];
         for (let i = 0; i < localStorageLen; ++i) {
@@ -33,6 +47,10 @@ class PageLayout extends Component {
         }
         localStorageKeys.map(function (localStorageKey) {
             localStorage.removeItem(localStorageKey);
+        });
+
+        this.setState({
+            "canClearCache": true
         });
     }
 
