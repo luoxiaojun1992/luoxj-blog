@@ -6,6 +6,7 @@ import '../App.css';
 import { connect } from 'react-redux';
 import { getYear, locateIp, queryHoliday, reqAggregate } from '../actions';
 import '../iconfont/iconfont.css';
+import 'wired-elements';
 
 class PageLayout extends Component {
     constructor(props) {
@@ -71,12 +72,14 @@ class PageLayout extends Component {
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
-                        <div style={{background: '#fff', padding: 24, minHeight: 380}}>
-                            {this.props.children}
-                        </div>
+                        <wired-card elevation="3" style={{width: "100%"}}>
+                            <div style={{padding: 24, minHeight: 380, minWidth: "100%"}}>
+                                {this.props.children}
+                            </div>
+                        </wired-card>
                     </Content>
                     <Footer style={{textAlign: 'center'}}>
-                        罗晓俊の博客 ©{this.props.year} Powered by Roy <a onClick={this.clearLocalStorage}>清除缓存</a>
+                        罗晓俊の博客 ©{this.props.year} Powered by Roy <wired-button onClick={this.clearLocalStorage}>清除缓存</wired-button>
                     </Footer>
                 </Layout>
                 <BackTop />
