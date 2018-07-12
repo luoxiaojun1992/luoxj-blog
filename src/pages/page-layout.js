@@ -72,8 +72,8 @@ class PageLayout extends Component {
                     </Header>
                     <Content style={{padding: '0 50px', marginTop: 64}}>
                         {this.props.breadcrumb()}
-                        <wired-card elevation="3" style={{width: "100%"}}>
-                            <div style={{padding: 24, minHeight: 380, minWidth: "100%"}}>
+                        <wired-card elevation="3" style={{width: "100%", background: "#fff"}}>
+                            <div style={{padding: 24, minHeight: 380, width: "100%"}}>
                                 {this.props.children}
                             </div>
                         </wired-card>
