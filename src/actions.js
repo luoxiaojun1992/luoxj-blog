@@ -94,7 +94,9 @@ export function getListArticles(thisObj, page) {
                 res.json().then(function (jsonData) {
                     if (jsonData.data.length > 0) {
                         if (thisObj.state.page + 1 !== page) {
-                            dispatch(getListArticles(thisObj, page));
+                            if (thisObj.state.page + 1 < page) {
+                                dispatch(getListArticles(thisObj, page));
+                            }
                             return;
                         }
                         let articles = thisObj.state.articles;

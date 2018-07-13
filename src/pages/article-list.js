@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import Breadcrumb from 'antd/lib/breadcrumb';
+import Input from 'antd/lib/input';
 import '../App.css';
 import PageLayout from './page-layout';
 import { connect } from 'react-redux';
@@ -37,6 +38,8 @@ class ArticleList extends Component {
     }
 
     render() {
+        const { Search } = Input;
+
         return (
             <PageLayout breadcrumb={() => {
                 return (
@@ -50,6 +53,11 @@ class ArticleList extends Component {
                     <h2><Link to="/">罗晓俊の博客</Link></h2>
                 );
             }}>
+                <Search
+                    placeholder="input search text"
+                    onSearch={value => {console.log(value)}}
+                    style={{ width: 200 }}
+                /><br /><br />
                 <ul>
                     <InfiniteScroll
                         pageStart={0}
