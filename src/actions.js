@@ -102,7 +102,6 @@ export function getListArticles(thisObj, page, keyword = '') {
                         let articles = thisObj.state.articles;
                         jsonData.data.map(function (article) {
                             articles.push(article);
-                            return articles;
                         });
                         thisObj.setState({
                             articles: articles,
