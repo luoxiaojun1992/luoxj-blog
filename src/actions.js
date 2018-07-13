@@ -82,11 +82,11 @@ export function getDetailArticle(id) {
     }
 }
 
-export function getListArticles(thisObj, page) {
+export function getListArticles(thisObj, page, keyword = '') {
     return function (dispatch) {
         const limit = 10;
         const offset = page * limit;
-        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit  + '&access-token=' + config.get('access-token'), {
+        fetch(config.get('api_gateway') + '/article/action/list?offset=' + offset + '&limit=' + limit + '&keyword=' + keyword + '&access-token=' + config.get('access-token'), {
             method: 'GET',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         }).then(function (res) {

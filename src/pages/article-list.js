@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from '../third_party/InfiniteScroll';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import Input from 'antd/lib/input';
 import '../App.css';
@@ -12,29 +12,42 @@ class ArticleList extends Component {
     constructor(props) {
         super(props);
 
-        var articles = [];
+        let articles = [];
 
         this.state = {
             articles: articles,
             hasMoreItems: true,
-            page: -1
+            page: -1,
+            isResetScroll: false,
+            searchKeyword: ''
         };
 
         this.loadFunc = this.loadFunc.bind(this);
+        this.search = this.search.bind(this);
 
         const { dispatch } = props;
 
-        dispatch(getListArticles(this, 0));
+        dispatch(getListArticles(this, 0, this.state.searchKeyword));
     }
 
-    loadFunc(page) {
+    loadFunc(page, keyword='') {
         this.setState({
             hasMoreItems: false
         });
 
         const { dispatch } = this.props;
 
-        dispatch(getListArticles(this, page));
+        dispatch(getListArticles(this, page, keyword ? keyword : this.state.searchKeyword));
+    }
+
+    search(keyword) {
+        this.setState({
+            articles: [],
+            isResetScroll:true,
+            page:-1,
+            searchKeyword: keyword
+        });
+        this.loadFunc(0, keyword);
     }
 
     render() {
@@ -55,7 +68,7 @@ class ArticleList extends Component {
             }}>
                 <Search
                     placeholder="input search text"
-                    onSearch={value => {console.log(value)}}
+                    onSearch={this.search}
                     style={{ width: 200 }}
                 /><br /><br />
                 <ul>
@@ -63,12 +76,17 @@ class ArticleList extends Component {
                         pageStart={0}
                         loadMore={this.loadFunc}
                         hasMore={this.state.hasMoreItems}
-                        loader={<div className="loader">Loading ...</div>}
+                        loader={<div key="loader" className="loader">Loading ...</div>}
+                        isReset={this.state.isResetScroll}
+                        clearReset={()=>{this.setState({isResetScroll: false})}}
                     >
                         {
                             this.state.articles.map(function (article) {
                                 return (
-                                    <li key={article.id}><h3><Link to={article.link}>{article.title}</Link></h3></li>);
+                                    <li key={article.id}>
+                                        <h3><Link to={article.link}>{article.title}</Link></h3>
+                                    </li>
+                                );
                             })
                         }
                     </InfiniteScroll>
