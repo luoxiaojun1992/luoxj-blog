@@ -168,7 +168,7 @@ export default class InfiniteScroll extends Component {
             // Call loadMore after detachScrollListener to allow for non-async loadMore functions
             if (typeof this.props.loadMore === 'function') {
                 if (this.props.isReset) {
-                    this.pageLoaded = 0;
+                    this.pageLoaded = this.props.pageStart;
                     this.props.clearReset();
                 }
                 this.props.loadMore((this.pageLoaded += 1));
