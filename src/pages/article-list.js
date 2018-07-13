@@ -76,7 +76,7 @@ class ArticleList extends Component {
                         pageStart={0}
                         loadMore={this.loadFunc}
                         hasMore={this.state.hasMoreItems}
-                        loader={<div key="loader" className="loader">Loading ...</div>}
+                        loader={<div key="infinite-scroll-loader" className="loader">Loading ...</div>}
                         isReset={this.state.isResetScroll}
                         clearReset={()=>{this.setState({isResetScroll: false})}}
                     >
