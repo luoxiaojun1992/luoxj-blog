@@ -224,6 +224,6 @@ export default class InfiniteScroll extends Component {
     }
 
     resetPageLoaded() {
-        this.pageLoaded = this.props.pageStart
+        this.pageLoaded = this.props.pageStart;
     }
 }
