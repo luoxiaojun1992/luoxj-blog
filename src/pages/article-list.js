@@ -30,14 +30,14 @@ class ArticleList extends Component {
         dispatch(getListArticles(this, 0, this.state.searchKeyword));
     }
 
-    loadFunc(page, keyword='') {
+    loadFunc(page, keyword=null) {
         this.setState({
             hasMoreItems: false
         });
 
         const { dispatch } = this.props;
 
-        dispatch(getListArticles(this, page, keyword ? keyword : this.state.searchKeyword));
+        dispatch(getListArticles(this, page, keyword !== null ? keyword : this.state.searchKeyword));
     }
 
     search(keyword) {
